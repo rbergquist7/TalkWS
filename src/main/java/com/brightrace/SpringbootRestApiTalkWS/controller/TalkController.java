@@ -40,4 +40,15 @@ public class TalkController {
 	public void delete(@PathVariable Integer id) {
 		talkservice.delete(id);
 	}
+	@PutMapping("/talks/{id}")
+	public ResponseEntity<?> update(@RequestBody Talk talk, @PathVariable Integer id){
+		try {
+			talk.setId(id);
+			
+			talkservice.save(talk);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch(NoSuchElementException e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
 }
